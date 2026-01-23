@@ -7,6 +7,9 @@ class CarBrands(models.Model):
     class Meta:
         verbose_name = 'Марка машины'
         verbose_name_plural = 'Марки машины'
+    
+    def __str__(self):
+        return self.brand
 
 
 class CarModels(models.Model):
@@ -19,6 +22,9 @@ class CarModels(models.Model):
     class Meta:
         verbose_name = 'Модель машины'
         verbose_name_plural = 'Модели машины'
+
+    def __str__(self):
+        return self.series
     
 
 class ProductCategory(models.Model):
@@ -27,6 +33,9 @@ class ProductCategory(models.Model):
     class Meta:
         verbose_name = 'Категория товара'
         verbose_name_plural = 'Категории товара'
+
+    def __str__(self):
+        return self.category
 
 
 class Product(models.Model):
@@ -47,6 +56,8 @@ class Product(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары' 
     
+    def __str__(self):
+        return self.product_name
 
 class ProductImages(models.Model):
     image_path = models.CharField()
@@ -58,4 +69,9 @@ class ProductImages(models.Model):
         on_delete=models.CASCADE
         
     )
-    
+    class Meta:
+        verbose_name = 'Фото'
+        verbose_name_plural = 'Фото' 
+
+    def __str__(self):
+        return self.image_path
