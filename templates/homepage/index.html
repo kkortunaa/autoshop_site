@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Главная стр</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="hero-section">
+        <h1>Добро пожаловать в наш магазин</h1>
+        <p>Автозапчасти и аксессуары для вашего автомобиля</p>
+        
+        <div class="cta-container">
+            <a href="{% url 'catalog' %}" class="btn-catalog">
+                Перейти в каталог →
+            </a>
+        </div>
+    </div>
+    
+    <!-- Дополнительный контент главной страницы -->
+    <div class="features">
+        <div class="feature">
+            <h3>Широкий ассортимент</h3>
+            <p>Более 1000 товаров в каталоге</p>
+        </div>
+        <div class="feature">
+            <h3>Гарантия качества</h3>
+            <p>Оригинальные запчасти и сертифицированные аналоги</p>
+        </div>
+        <div class="feature">
+            <h3>Быстрая доставка</h3>
+            <p>Отправка в день заказа</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
