@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Каталог — автозапчасти{% endblock %}
+
+{% block content %}
+<section class="catalog-header">
+    <div class="container">
+        <h1 class="catalog-title">Каталог</h1>
+        <p class="catalog-subtitle">Выберите запчасти для вашего автомобиля</p>
+    </div>
+</section>
+
+<section class="container">
+    <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <div class="product-image-container">
+                {% with product.images.all as images %}
+                    {% if images %}
+                        <a href="{% url 'product_detail' product.id %}">
+                            {% for img in images %}
+                                {% if img.is_main or forloop.first %}
+                                    <img src="{{ img.image.url }}" alt="{{ product.product_name }}" class="product-image">
+                                {% endif %}
+                            {% endfor %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'product_detail' product.id %}">
+                            <img src="{% static 'images/no-image.jpg' %}" alt="Нет изображения" class="product-image">
+                        </a>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            
+            <div class="product-info">
+                <h3 class="product-name">{{ product.product_name }}</h3>
+                
+                <div class="product-meta">
+                    {% if product.product_model %}
+                    <span class="product-model">{{ product.product_model }}</span>
+                    {% endif %}
+                    
+                    {% if product.product_brand %}
+                    <span class="product-brand">{{ product.product_brand }}</span>
+                    {% endif %}
+                </div>
+                
+                {% if product.product_category %}
+                <div class="product-category-detail">{{ product.product_category.category }}</div>
+                {% endif %}
+                
+                {% if product.car_models.all %}
+                <div class="product-compatibility">
+                    {% for car_model in product.car_models.all|slice:":2" %}
+                        {{ car_model.car_brand.brand }} {{ car_model.series }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% if product.car_models.all|length > 2 %}...{% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="product-price">{{ product.price }} ₽</div>
+                
+                <a href="{% url 'product_detail' product.id %}" class="view-details-btn">
+                    Подробнее
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-products">
+            <p>Товары не найдены.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

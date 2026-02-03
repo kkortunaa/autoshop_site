@@ -16,7 +16,8 @@ class CarModels(models.Model):
     series = models.SlugField("Серия")
     car_brand = models.ForeignKey(
         CarBrands,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="model"
     )
 
     class Meta:
@@ -42,10 +43,11 @@ class Product(models.Model):
     product_name = models.CharField("Название", max_length=128)
     product_model = models.SlugField()
     product_brand = models.CharField()
-    price = models.IntegerField()
+    price = models.DecimalField(decimal_places=2, max_digits=9)
     product_category = models.ForeignKey(
         ProductCategory,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="product_category"
     )
     car_models = models.ManyToManyField(
         CarModels,
@@ -60,9 +62,8 @@ class Product(models.Model):
         return self.product_name
 
 class ProductImages(models.Model):
-    image_path = models.CharField()
     image = models.ImageField("Фото", upload_to="products/")
-    is_main = models.BooleanField(False)
+    is_main = models.BooleanField(default=False)
     prod_attr = models.ForeignKey(
         Product,
         related_name="images",
@@ -74,4 +75,8 @@ class ProductImages(models.Model):
         verbose_name_plural = 'Фото' 
 
     def __str__(self):
-        return self.image_path
+        return self.image.name
+    
+    @property
+    def main_image(self):
+        return self.images.filter(is_main=True).first() or self.images.first()

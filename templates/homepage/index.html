@@ -1,35 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}автозапчасти{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="hero-section">
-        <h1>Добро пожаловать в наш магазин</h1>
-        <p>Автозапчасти и аксессуары для вашего автомобиля</p>
-        
-        <div class="cta-container">
-            <a href="{% url 'catalog' %}" class="btn-catalog">
-                Перейти в каталог →
-            </a>
-        </div>
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-title">Автозапчасти</h1>
+        <p class="hero-subtitle">Качественные запчасти для вашего автомобиля от проверенных производителей</p>
+        <a href="/catalog/" class="btn-primary">Каталог</a>
     </div>
-    
-    <!-- Дополнительный контент главной страницы -->
-    <div class="features">
-        <div class="feature">
-            <h3>Широкий ассортимент</h3>
-            <p>Более 1000 товаров в каталоге</p>
+</section>
+
+<section class="container">
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Оригинальные запчасти</h3>
+            <p>Только проверенные производители с гарантией качества</p>
         </div>
-        <div class="feature">
-            <h3>Гарантия качества</h3>
-            <p>Оригинальные запчасти и сертифицированные аналоги</p>
-        </div>
-        <div class="feature">
+        <div class="feature-card">
             <h3>Быстрая доставка</h3>
-            <p>Отправка в день заказа</p>
+            <p>Отправка заказов в день оформления</p>
+        </div>
+        <div class="feature-card">
+            <h3>Профессиональная поддержка</h3>
+            <p>Консультации по подбору запчастей</p>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

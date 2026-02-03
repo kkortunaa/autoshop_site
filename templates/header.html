@@ -1,29 +1,19 @@
 <header>
     <div class="container">
-        <a href="{% url 'home' %}" class="logo">
+        <a href="{% url 'homepage' %}" class="logo">
             Автозапчасти
         </a>
         
         <nav class="main-nav">
             <ul>
                 <li>
-                    <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>
+                    <a href="{% url 'homepage' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>
                         Главная
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'catalog' %}" {% if request.resolver_match.url_name == 'catalog' %}class="active"{% endif %}>
                         Каталог
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>
-                        О нас
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'contacts' %}" {% if request.resolver_match.url_name == 'contacts' %}class="active"{% endif %}>
-                        Контакты
                     </a>
                 </li>
                 <li>

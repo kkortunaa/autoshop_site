@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import User_order, Bucket, BucketItem
+from .models import UserOrder, Bucket, BucketItem
 
-admin.site.register(User_order) 
+admin.site.register(UserOrder) 
 admin.site.register(Bucket) 

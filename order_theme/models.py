@@ -2,13 +2,13 @@ from django.db import models
 from catalog.models import Product
 
 
-class User_order(models.Model):
+class UserOrder(models.Model):
 
     class ModelChoices(models.TextChoices):
-        IN_PROGRESS = "в процессе",
-        IN_WAY = "в пути",
-        READY = "Готов",
-        ERROR = "Ошибка",
+        IN_PROGRESS = "в процессе"
+        IN_WAY = "в пути"
+        READY = "Готов"
+        ERROR = "Ошибка"
 
     name = models.CharField("Имя", max_length=128)
     phone_number = models.CharField("Номер телефона", max_length=20)
@@ -33,7 +33,7 @@ class Bucket(models.Model):
 
 
 class BucketItem(models.Model):
-    price_in_moment = models.IntegerField()
+    price_in_moment = models.DecimalField(max_digits=9, decimal_places=2)
     quantity = models.IntegerField(default=1)
     bucket = models.ForeignKey(
         Bucket,
