@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AUTOPARTS — Каталог{% endblock %}
+
+{% block content %}
+<main class="c-main">
+    <section class="c-container c-space-top">
+        {% include 'includes/navbar.html' with in_hero=False %}
+    </section>
+
+    <section class="c-container c-space-lg c-space-bottom">
+        <div class="c-catalog-layout">
+            <aside class="c-catalog-sidebar">
+                <form class="c-filter-card c-panel c-panel--glass" method="get">
+                    <h2 class="c-section-title c-section-title--small">ФИЛЬТРЫ</h2>
+
+                    <label class="c-field">
+                        <span>Поиск</span>
+                        <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Название или артикул">
+                    </label>
+
+                    <label class="c-field">
+                        <span>Категория</span>
+                        <select name="category">
+                            <option value="">Все</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:'s' %}selected{% endif %}>{{ category.category }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+
+                    <label class="c-field">
+                        <span>Бренд</span>
+                        <input type="text" name="brand" value="{{ request.GET.brand|default:'' }}" placeholder="Например, Bosch">
+                    </label>
+
+                    <div class="c-field-row">
+                        <label class="c-field">
+                            <span>Цена от</span>
+                            <input type="number" name="price_min" value="{{ request.GET.price_min|default:'' }}" min="0">
+                        </label>
+                        <label class="c-field">
+                            <span>Цена до</span>
+                            <input type="number" name="price_max" value="{{ request.GET.price_max|default:'' }}" min="0">
+                        </label>
+                    </div>
+
+                    <label class="c-checkbox">
+                        <input type="checkbox" name="in_stock" {% if request.GET.in_stock %}checked{% endif %}>
+                        <span>Только в наличии</span>
+                    </label>
+
+                    <button type="submit" class="c-btn c-btn--solid c-btn--full">Применить</button>
+                </form>
+            </aside>
+
+            <div class="c-catalog-content">
+                <div class="c-toolbar c-panel c-panel--glass">
+                    <div class="c-toolbar__title">Каталог запчастей</div>
+                    <form method="get" class="c-sort-form">
+                        {# Сохраняем фильтры при изменении сортировки #}
+                        <input type="hidden" name="q" value="{{ request.GET.q|default:'' }}">
+                        <input type="hidden" name="category" value="{{ request.GET.category|default:'' }}">
+                        <input type="hidden" name="brand" value="{{ request.GET.brand|default:'' }}">
+                        <input type="hidden" name="price_min" value="{{ request.GET.price_min|default:'' }}">
+                        <input type="hidden" name="price_max" value="{{ request.GET.price_max|default:'' }}">
+                        {% if request.GET.in_stock %}<input type="hidden" name="in_stock" value="on">{% endif %}
+                        <label for="sort">Сортировка:</label>
+                        <select id="sort" name="sort" onchange="this.form.submit()">
+                            <option value="popular" {% if request.GET.sort == 'popular' or not request.GET.sort %}selected{% endif %}>по популярности</option>
+                            <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>по цене ↑</option>
+                            <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>по цене ↓</option>
+                            <option value="new" {% if request.GET.sort == 'new' %}selected{% endif %}>по новизне</option>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="c-product-grid c-product-grid--catalog">
+                    {% for product in page_obj.object_list %}
+                        {% include 'includes/product_card.html' with product=product %}
+                    {% empty %}
+                        <article class="c-empty-box">По заданным фильтрам ничего не найдено.</article>
+                    {% endfor %}
+                </div>
+
+                {% if page_obj.paginator.num_pages > 1 %}
+                    <nav class="c-pagination c-panel c-panel--glass" aria-label="Пагинация">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">←</a>
+                        {% else %}
+                            <span class="is-disabled">←</span>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if num == page_obj.number %}
+                                <span class="is-current">{{ num }}</span>
+                            {% elif num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                                <a href="?page={{ num }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">→</a>
+                        {% else %}
+                            <span class="is-disabled">→</span>
+                        {% endif %}
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

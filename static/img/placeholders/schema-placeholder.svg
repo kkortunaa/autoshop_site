@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+  <defs>
+    <linearGradient id="schemaGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171717"/>
+      <stop offset="1" stop-color="#2d2d2d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#schemaGradient)"/>
+  <rect x="120" y="110" width="960" height="680" fill="#0f0f0f" stroke="#ffffff" stroke-opacity="0.4"/>
+  <path d="M220 220H980" stroke="#b8b8b8" stroke-width="2" stroke-dasharray="8 8"/>
+  <path d="M220 350H980" stroke="#b8b8b8" stroke-width="2" stroke-dasharray="8 8"/>
+  <path d="M220 480H980" stroke="#b8b8b8" stroke-width="2" stroke-dasharray="8 8"/>
+  <path d="M220 610H980" stroke="#b8b8b8" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="260" y="760" fill="#ffffff" font-size="40" font-family="Arial, sans-serif">CAR SCHEME / EXPLODED VIEW PLACEHOLDER</text>
+</svg>

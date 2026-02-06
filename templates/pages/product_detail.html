@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.product_name }} — AUTOPARTS{% endblock %}
+
+{% block content %}
+<main class="c-main">
+    <section class="c-container c-space-top">
+        {% include 'includes/navbar.html' with in_hero=False %}
+    </section>
+
+    <section class="c-container c-space-lg">
+        <article class="c-product-detail c-panel c-panel--glass">
+            <div class="c-product-detail__gallery">
+                {% with product.images.all as images %}
+                    <div class="c-main-image">
+                        {% if images %}
+                            {% for image in images %}
+                                {% if image.is_main or forloop.first %}
+                                    <img src="{{ image.image.url }}" alt="{{ product.product_name }}" id="main-product-image" class="c-product-main-img">
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер товара" id="main-product-image" class="c-product-main-img">
+                        {% endif %}
+                    </div>
+
+                    <div class="c-thumbs" data-gallery>
+                        {% if images %}
+                            {% for image in images %}
+                                <button type="button" class="c-thumb {% if forloop.first %}is-active{% endif %}" data-gallery-thumb data-image-url="{{ image.image.url }}">
+                                    <img src="{{ image.image.url }}" alt="Миниатюра {{ forloop.counter }}">
+                                </button>
+                            {% endfor %}
+                        {% else %}
+                            <button type="button" class="c-thumb is-active" data-gallery-thumb data-image-url="{% static 'img/placeholders/product-placeholder.svg' %}">
+                                <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Миниатюра-плейсхолдер">
+                            </button>
+                        {% endif %}
+                    </div>
+                {% endwith %}
+            </div>
+
+            <div class="c-product-detail__info">
+                <h1 class="c-product-title">{{ product.product_name }}</h1>
+                <div class="c-muted-line">Артикул: {{ product.product_model|default:'N/A' }}</div>
+                <div class="c-muted-line">Бренд: {{ product.product_brand|default:'Не указан' }}</div>
+                <div class="c-stock">В наличии</div>
+                <div class="c-price">{{ product.price }} ₽</div>
+
+                <form method="post" action="{% url 'add_to_cart' product.id %}" class="c-add-form">
+                    {% csrf_token %}
+                    <div class="c-qty" data-quantity>
+                        <button type="button" class="c-qty__btn" data-qty-minus>-</button>
+                        <input type="number" name="quantity" value="1" min="1" class="c-qty__input" data-qty-input>
+                        <button type="button" class="c-qty__btn" data-qty-plus>+</button>
+                    </div>
+                    <button type="submit" class="c-btn c-btn--solid">В корзину</button>
+                </form>
+
+                <div class="c-tabs" data-tabs>
+                    <div class="c-tabs__nav">
+                        <button type="button" class="is-active" data-tab="description">Описание</button>
+                        <button type="button" data-tab="specs">Характеристики</button>
+                        <button type="button" data-tab="compatibility">Совместимость</button>
+                    </div>
+
+                    <div class="c-tab-panel is-active" id="description">
+                        <p>Качественная запчасть для стабильной работы автомобиля. Перед установкой проверьте совместимость по VIN.</p>
+                    </div>
+                    <div class="c-tab-panel" id="specs">
+                        <table class="c-spec-table">
+                            <tr><th>Название</th><td>{{ product.product_name }}</td></tr>
+                            <tr><th>Артикул</th><td>{{ product.product_model|default:'N/A' }}</td></tr>
+                            <tr><th>Бренд</th><td>{{ product.product_brand|default:'Не указан' }}</td></tr>
+                            <tr><th>Категория</th><td>{{ product.product_category.category|default:'Не указана' }}</td></tr>
+                        </table>
+                    </div>
+                    <div class="c-tab-panel" id="compatibility">
+                        {% if product.car_models.all %}
+                            <ul class="c-compat-list">
+                                {% for model in product.car_models.all %}
+                                    <li>{{ model.car_brand.brand }} {{ model.series }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Список совместимых моделей уточняйте у менеджера по VIN.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="c-container c-space-lg c-space-bottom">
+        <article class="c-section-card c-panel c-panel--glass">
+            <h2 class="c-section-title">ПОХОЖИЕ ТОВАРЫ</h2>
+            <div class="c-product-grid c-product-grid--4">
+                {% for related in related_products %}
+                    {% include 'includes/product_card.html' with product=related %}
+                {% empty %}
+                    <article class="c-empty-box">Недостаточно данных для рекомендаций.</article>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

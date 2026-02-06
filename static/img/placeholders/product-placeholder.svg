@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <linearGradient id="prodGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a1a"/>
+      <stop offset="1" stop-color="#363636"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#prodGradient)"/>
+  <rect x="160" y="120" width="880" height="560" fill="#101010" stroke="#ffffff" stroke-opacity="0.45"/>
+  <circle cx="600" cy="400" r="130" fill="#2a2a2a"/>
+  <text x="290" y="720" fill="#ffffff" font-size="44" font-family="Arial, sans-serif">PRODUCT IMAGE PLACEHOLDER</text>
+</svg>

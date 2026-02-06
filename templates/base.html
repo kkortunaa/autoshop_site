@@ -1,93 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Автозапчасти{% endblock %}</title>
-    {% load static %}
+    <title>{% block title %}AUTOPARTS{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="/" class="logo">автозапчасти</a>
-                
-                <nav class="nav">
-                    <div class="nav-items">
-                        <a href="/" class="nav-link">Главная</a>
-                        <a href="/catalog/" class="nav-link">Каталог</a>
-                        <a href="#" class="nav-link">О нас</a>
-                        <a href="#" class="nav-link">Контакты</a>
-                    </div>
-                    
-                    <div class="nav-actions">
-                        <a href="#" class="nav-action">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
-                                <line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="nav-action cart">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <circle cx="6" cy="14" r="1" stroke="currentColor" stroke-width="1.5"/>
-                                <circle cx="12" cy="14" r="1" stroke="currentColor" stroke-width="1.5"/>
-                                <path d="M1 1h3l1.5 7.5h9" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                            <span class="cart-count">0</span>
-                        </a>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </header>
-    
-    <main class="main">
-        {% block content %}
-        {% endblock %}
-    </main>
-    
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>автозапчасти</h3>
-                    <p class="footer-text">Качественные запчасти<br>для вашего автомобиля</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Каталог</h4>
-                    <a href="#" class="footer-link">Двигатель</a>
-                    <a href="#" class="footer-link">Тормозная система</a>
-                    <a href="#" class="footer-link">Подвеска</a>
-                    <a href="#" class="footer-link">Электрика</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Информация</h4>
-                    <a href="#" class="footer-link">Доставка</a>
-                    <a href="#" class="footer-link">Оплата</a>
-                    <a href="#" class="footer-link">Гарантия</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Контакты</h4>
-                    <p class="footer-text">+7 (999) 123-45-67</p>
-                    <p class="footer-text">info@autoparts.ru</p>
-                    <p class="footer-text">Москва</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">© {% now "Y" %} автозапчасти</p>
-                <div class="footer-links">
-                    <a href="#" class="footer-link small">Политика конфиденциальности</a>
-                    <a href="#" class="footer-link small">Условия использования</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-    
+<body class="{% block body_class %}{% endblock %}">
+    <div class="c-page-bg" aria-hidden="true"></div>
+
+    {% block layout %}
+        {% block content %}{% endblock %}
+    {% endblock %}
+
+    {% include 'includes/footer.html' %}
+
     <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

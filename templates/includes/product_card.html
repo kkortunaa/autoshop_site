@@ -1,0 +1,26 @@
+{% load static %}
+<article class="c-product-card c-hover-lift">
+    <a href="{% url 'product_detail' product.id %}" class="c-product-card__image-wrap">
+        {% with product.images.all as images %}
+            {% if images %}
+                {% for img in images %}
+                    {% if img.is_main or forloop.first %}
+                        <img src="{{ img.image.url }}" alt="{{ product.product_name }}" class="c-product-card__image">
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер товара" class="c-product-card__image">
+            {% endif %}
+        {% endwith %}
+    </a>
+    <div class="c-product-card__body">
+        <div class="c-product-card__meta">{{ product.product_brand|default:'Generic' }} · {{ product.product_model|default:'N/A' }}</div>
+        <h3 class="c-product-card__title">
+            <a href="{% url 'product_detail' product.id %}">{{ product.product_name }}</a>
+        </h3>
+        <div class="c-product-card__bottom">
+            <div class="c-product-card__price">{{ product.price }} ₽</div>
+            <a href="{% url 'product_detail' product.id %}" class="c-btn c-btn--tiny">Подробнее</a>
+        </div>
+    </div>
+</article>

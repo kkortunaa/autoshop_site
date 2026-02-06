@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AUTOPARTS — Главная{% endblock %}
+
+{% block body_class %}page-home{% endblock %}
+
+{% block content %}
+<main class="c-main c-main--home">
+    <section class="c-container c-space-top">
+        <article class="c-hero-card c-hero-card--photo-blur c-panel c-panel--glass" style="background-image: linear-gradient(120deg, rgba(8, 16, 25, 0.35), rgba(8, 16, 25, 0.8)), url('{% static 'img/placeholders/engine.jpg' %}');">
+            {% include 'includes/navbar.html' with in_hero=True %}
+
+            <div class="c-hero-card__content">
+                <h1 class="c-hero-title">AUTOPARTS</h1>
+                <div class="c-hero-actions">
+                    <a href="{% url 'catalog' %}" class="c-btn c-btn--solid">Перейти в каталог</a>
+                    <a href="#" class="c-btn c-btn--ghost">Подбор по VIN</a>
+                    {# TODO: replace VIN href with your real route #}
+                </div>
+            </div>
+
+            <div class="c-hero-meta">
+                <p>Новый стандарт подбора автозапчастей</p>
+                <span>AUTOPARTS, MOSCOW</span>
+            </div>
+        </article>
+    </section>
+
+    <section class="c-container c-space-lg">
+        <article class="c-section-card c-panel c-panel--glass">
+            <h2 class="c-section-title">НАШИ ПРЕИМУЩЕСТВА</h2>
+            <div class="c-adv-grid">
+                <article class="c-adv-card c-hover-lift">
+                    <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер: быстрая доставка" class="c-adv-card__img">
+                    <div class="c-adv-card__index">01</div>
+                    <h3>Быстрая доставка</h3>
+                    <p>Отгрузка в день заказа и прозрачный трекинг.</p>
+                </article>
+                <article class="c-adv-card c-hover-lift">
+                    <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер: подбор по VIN" class="c-adv-card__img">
+                    <div class="c-adv-card__index">02</div>
+                    <h3>Подбор по VIN</h3>
+                    <p>Минимум ошибок при подборе по номеру кузова.</p>
+                </article>
+                <article class="c-adv-card c-hover-lift">
+                    <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер: оригинал и аналог" class="c-adv-card__img">
+                    <div class="c-adv-card__index">03</div>
+                    <h3>Оригинал/аналог на выбор</h3>
+                    <p>Под бюджет и срок, без компромисса по совместимости.</p>
+                </article>
+                <article class="c-adv-card c-hover-lift">
+                    <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер: возврат и гарантия" class="c-adv-card__img">
+                    <div class="c-adv-card__index">04</div>
+                    <h3>Возврат и гарантия</h3>
+                    <p>Чёткие условия возврата и контроль качества.</p>
+                </article>
+            </div>
+        </article>
+    </section>
+
+    <section class="c-container c-space-lg">
+        <article class="c-section-card c-panel c-panel--glass c-two-col-card">
+            <div class="c-two-col-card__left">
+                <h2 class="c-section-title">КАК МЫ ПОДБИРАЕМ</h2>
+                <ul class="c-spec-list">
+                    <li><span>VIN</span><strong>Приоритетный метод</strong></li>
+                    <li><span>Марка/модель</span><strong>Точный фильтр</strong></li>
+                    <li><span>Категория</span><strong>Быстрый старт</strong></li>
+                    <li><span>Артикул</span><strong>Поиск без ошибок</strong></li>
+                    <li><span>Совместимость</span><strong>Финальная проверка</strong></li>
+                </ul>
+            </div>
+            <div class="c-two-col-card__right">
+                <img src="{% static 'img/placeholders/schema-placeholder.svg' %}" alt="Плейсхолдер: схема авто или exploded view" class="c-two-col-card__image">
+                {# TODO: replace with real image of car scheme / exploded view #}
+            </div>
+        </article>
+    </section>
+
+    <section class="c-container c-space-lg">
+        <article class="c-section-card c-panel c-panel--glass">
+            <h2 class="c-section-title">ПОПУЛЯРНЫЕ КАТЕГОРИИ</h2>
+            <div class="c-category-grid">
+                <a class="c-chip c-hover-lift" href="#">Тормоза</a>
+                <a class="c-chip c-hover-lift" href="#">Подвеска</a>
+                <a class="c-chip c-hover-lift" href="#">Фильтры</a>
+                <a class="c-chip c-hover-lift" href="#">Масла</a>
+                <a class="c-chip c-hover-lift" href="#">Электрика</a>
+                <a class="c-chip c-hover-lift" href="#">Кузов</a>
+                <a class="c-chip c-hover-lift" href="#">Ремни</a>
+                <a class="c-chip c-hover-lift" href="#">Свечи</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="c-container c-space-lg c-space-bottom">
+        <article class="c-section-card c-panel c-panel--glass">
+            <h2 class="c-section-title">ХИТЫ ПРОДАЖ</h2>
+            <div class="c-product-grid c-product-grid--4">
+                {% for product in featured_products %}
+                    {% include 'includes/product_card.html' with product=product %}
+                {% empty %}
+                    <article class="c-empty-box">Добавьте товары в БД, чтобы вывести хиты продаж.</article>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

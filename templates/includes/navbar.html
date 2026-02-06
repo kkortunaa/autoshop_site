@@ -1,0 +1,31 @@
+<nav class="c-navbar {% if in_hero %}c-navbar--hero{% else %}c-navbar--standalone{% endif %}">
+    <div class="c-navbar__inner">
+        <a class="c-logo" href="{% url 'home' %}">AUTOPARTS</a>
+
+        <button class="c-mobile-toggle" type="button" data-mobile-toggle aria-expanded="false" aria-controls="main-menu">
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="c-navbar__menu" id="main-menu" data-mobile-menu>
+            <ul class="c-nav-list">
+                <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'homepage' %}is-active{% endif %}">Главная</a></li>
+                <li><a href="{% url 'catalog' %}" class="{% if request.resolver_match.url_name == 'catalog' %}is-active{% endif %}">Каталог</a></li>
+                <li><a href="#">Подбор по VIN</a>{# TODO: replace href with your VIN url name #}</li>
+                <li><a href="#">Доставка</a>{# TODO: replace href with your delivery url name #}</li>
+                <li><a href="#">Контакты</a>{# TODO: replace href with your contacts url name #}</li>
+            </ul>
+
+            <div class="c-nav-actions">
+                <button class="c-icon-btn" type="button" aria-label="Поиск">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="{% url 'cart' %}" class="c-icon-btn c-cart-btn" aria-label="Корзина">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="c-badge">{{ cart_items_count|default:0 }}</span>
+                </a>
+                <a href="{% url 'login' %}" class="c-btn c-btn--ghost">Войти</a>
+            </div>
+        </div>
+    </div>
+</nav>

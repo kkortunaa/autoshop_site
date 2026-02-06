@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AUTOPARTS — Регистрация{% endblock %}
+{% block body_class %}page-auth{% endblock %}
+
+{% block content %}
+<main class="c-main c-main--auth">
+    <section class="c-auth-wrap">
+        <article class="c-panel c-panel--glass c-auth-card">
+            <h1 class="c-section-title c-section-title--small">РЕГИСТРАЦИЯ</h1>
+            <form class="c-form-grid" action="#" method="post">
+                {% csrf_token %}
+                <label class="c-field c-field--full">
+                    <span>Имя</span>
+                    <input type="text" name="name" required>
+                </label>
+                <label class="c-field c-field--full">
+                    <span>Email</span>
+                    <input type="email" name="email" required>
+                </label>
+                <label class="c-field c-field--full">
+                    <span>Пароль</span>
+                    <input type="password" name="password" required>
+                </label>
+                <button type="submit" class="c-btn c-btn--solid c-field--full">Создать аккаунт</button>
+            </form>
+            <p class="c-auth-note">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+        </article>
+    </section>
+</main>
+{% endblock %}

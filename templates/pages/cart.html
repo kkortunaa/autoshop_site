@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AUTOPARTS — Корзина{% endblock %}
+
+{% block content %}
+<main class="c-main">
+    <section class="c-container c-space-top">
+        {% include 'includes/navbar.html' with in_hero=False %}
+    </section>
+
+    <section class="c-container c-space-lg c-space-bottom">
+        <div class="c-cart-layout">
+            <article class="c-panel c-panel--glass c-cart-list">
+                <h1 class="c-section-title c-section-title--small">КОРЗИНА</h1>
+
+                {% if cart_items %}
+                    {% for item in cart_items %}
+                        <div class="c-cart-item">
+                            <div class="c-cart-item__img-wrap">
+                                {% with item.prod.images.all as images %}
+                                    {% if images %}
+                                        {% for img in images %}
+                                            {% if img.is_main or forloop.first %}
+                                                <img src="{{ img.image.url }}" alt="{{ item.prod.product_name }}" class="c-cart-item__img">
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <img src="{% static 'img/placeholders/product-placeholder.svg' %}" alt="Плейсхолдер товара" class="c-cart-item__img">
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+
+                            <div class="c-cart-item__info">
+                                <h3>{{ item.prod.product_name }}</h3>
+                                <p>Артикул: {{ item.prod.product_model|default:'N/A' }}</p>
+                                <p>Цена: {{ item.price_in_moment }} ₽</p>
+                            </div>
+
+                            <div class="c-cart-item__qty c-qty" data-quantity>
+                                <form method="post" action="{% url 'decrease_item' item.prod_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="c-qty__btn">-</button>
+                                </form>
+                                <input type="number" value="{{ item.quantity }}" min="1" class="c-qty__input" readonly>
+                                <form method="post" action="{% url 'increase_item' item.prod_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="c-qty__btn">+</button>
+                                </form>
+                            </div>
+
+                            <div class="c-cart-item__sum">{{ item.line_total }} ₽</div>
+
+                            <form method="post" action="{% url 'remove_item' item.prod_id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="c-icon-btn" aria-label="Удалить">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <article class="c-empty-box">Корзина пуста. Добавьте товары из каталога.</article>
+                {% endif %}
+            </article>
+
+            <aside class="c-panel c-panel--glass c-cart-summary">
+                <h2 class="c-section-title c-section-title--small">ИТОГО</h2>
+                <div class="c-summary-row"><span>Позиций</span><strong>{{ total_items }}</strong></div>
+                <div class="c-summary-row"><span>Сумма товаров</span><strong>{{ subtotal }} ₽</strong></div>
+                <div class="c-summary-row"><span>Доставка</span><strong>0 ₽</strong></div>
+                <div class="c-summary-row c-summary-row--total"><span>К оплате</span><strong>{{ subtotal }} ₽</strong></div>
+
+                <a href="{% url 'checkout' %}" class="c-btn c-btn--solid c-btn--full">Оформить заказ</a>
+            </aside>
+        </div>
+    </section>
+</main>
+{% endblock %}
